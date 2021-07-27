@@ -1,0 +1,19 @@
+name: 0potatotree0
+nickname: 0potatotree0
+uuid: 58fab859-c425-4d8a-84ec-57d4435711fc
+taskid: 0
+afk: false
+op: false
+whitelisted: false
+godmode: false
+muted: false
+vanished: false
+on-duty: false
+stats:
+  blocks:
+    broken: 0
+    placed: 0
+  killed:
+    players: 0
+    monsters: 0
+    animals: 0

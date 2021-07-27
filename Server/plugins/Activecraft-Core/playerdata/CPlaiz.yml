@@ -1,0 +1,21 @@
+name: CPlaiz
+nickname: wdwad
+uuid: b7de064b-64e1-4922-94fd-2ee35fa6b24d
+taskid: 0
+afk: false
+op: false
+whitelisted: false
+godmode: false
+muted: false
+vanished: false
+on-duty: false
+stats:
+  blocks:
+    broken: 0
+    placed: 0
+  killed:
+    players: 0
+    monsters: 0
+    animals: 0
+colornick: BLUE
+last-online: 28/07/2021, 00:49:41

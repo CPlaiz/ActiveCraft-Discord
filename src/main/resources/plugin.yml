@@ -1,0 +1,5 @@
+name: ActiveCraft-DiscordExtension
+version: ${project.version}
+main: de.cplaiz.activecraftdiscord.ActiveCraftDiscord
+api-version: 1.17
+depend: [ActiveCraft-Core]
