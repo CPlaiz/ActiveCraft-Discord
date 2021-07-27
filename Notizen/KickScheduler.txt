@@ -1,3 +1,0 @@
-quit -> save in hasmap
-join -> wenn hasmap empty oder 0 dann timer neu
-	wenn nicht dann timer weiter mit wert in hashmap

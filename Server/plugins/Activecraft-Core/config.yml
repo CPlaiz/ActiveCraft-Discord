@@ -1,4 +1,0 @@
-chat-format: "%displayname%: §f%message%"
-join-format: "§b>> %displayname%"
-quit-format: "§c<< %displayname%"
-use-timer-on-tpa: true
