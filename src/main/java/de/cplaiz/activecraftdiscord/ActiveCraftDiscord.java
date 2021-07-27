@@ -58,7 +58,7 @@ public final class ActiveCraftDiscord extends JavaPlugin {
 
         String BotToken = getConfig().getString("bot-token");
         JDABuilder builder = JDABuilder.createDefault(BotToken);
-        builder.setActivity(Activity.playing("mit deinem pepega"));
+        builder.setActivity(Activity.playing("minecraft"));
 
         this.cmdMan = new CommandManager();
 
