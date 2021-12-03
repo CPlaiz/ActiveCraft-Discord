@@ -6,10 +6,10 @@
 
     <groupId>de.cplaiz</groupId>
     <artifactId>activecraftdiscord</artifactId>
-    <version>1.0</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>ActiveCraftDiscord</name>
+    <name>ActiveCraft-Discord</name>
 
     <description>A plugin to link discord and minecraft.</description>
     <properties>
@@ -92,9 +92,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.destroystokyo.paper</groupId>
+            <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.16.4-R0.1-SNAPSHOT</version>
+            <version>1.17.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -116,11 +116,11 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>de.cplaiz</groupId>
+            <groupId>de.silencio</groupId>
             <artifactId>activecraftcore</artifactId>
-            <version>1.0</version>
+            <version>1.2.0</version>
             <scope>system</scope>
-            <systemPath>C:/Users/trees/IdeaProjects/ActiveCraft Discord Extension/Server/plugins/ActiveCraft-Core.jar</systemPath>
+            <systemPath>C:/Users/trees/IdeaProjects/ActiveCraft Discord/Server/plugins/ActiveCraft-Core.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

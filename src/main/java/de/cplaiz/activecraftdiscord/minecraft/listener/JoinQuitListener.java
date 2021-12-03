@@ -1,7 +1,8 @@
 package de.cplaiz.activecraftdiscord.minecraft.listener;
 
 import de.cplaiz.activecraftdiscord.discord.SendToDiscord;
-import de.cplaiz.activecraftdiscord.utils.MessageCutter;
+import de.silencio.activecraftcore.utils.MessageUtils;
+import de.silencio.activecraftcore.utils.Profile;
 import net.dv8tion.jda.api.EmbedBuilder;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,48 +18,36 @@ public class JoinQuitListener implements Listener {
 
     MessageCutter messageCutter = new MessageCutter();
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
 
         Player p = event.getPlayer();
+        Profile profile = new Profile(event.getPlayer());
 
         SendToDiscord sendToDiscord = new SendToDiscord();
         EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setAuthor(messageCutter.removeColorAndFormat(p.getDisplayName()) + " joined the server", null, "https://crafatar.com/avatars/" + p.getUniqueId());
+        embedBuilder.setAuthor(MessageUtils.removeColorAndFormat(profile.getNickname()) + " joined the server", null, "https://crafatar.com/avatars/" + p.getUniqueId());
         embedBuilder.setColor(Color.GREEN);
         embedBuilder.setTimestamp(OffsetDateTime.now());
 
         sendToDiscord.sendEmbed(embedBuilder);
     }
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.LOW)
     public void onPlayerLeave(PlayerQuitEvent event) {
 
         Player p = event.getPlayer();
+        Profile profile = new Profile(event.getPlayer());
 
         SendToDiscord sendToDiscord = new SendToDiscord();
         EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setAuthor(messageCutter.removeColorAndFormat(p.getDisplayName()) + " left the server", null, "https://crafatar.com/avatars/" + p.getUniqueId());
+        embedBuilder.setAuthor(MessageUtils.removeColorAndFormat(profile.getNickname()) + " left the server", null, "https://crafatar.com/avatars/" + p.getUniqueId());
         embedBuilder.setColor(Color.RED);
         embedBuilder.setTimestamp(OffsetDateTime.now());
-
-        sendToDiscord.sendEmbed(embedBuilder);
-    }
-
-    @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent event) {
-
-
-        Player p = event.getEntity();
-
-        SendToDiscord sendToDiscord = new SendToDiscord();
-        EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setAuthor(messageCutter.removeColorAndFormat(p.getDisplayName()) + event.getDeathMessage(), null, "https://crafatar.com/avatars/" + p.getUniqueId());
-        embedBuilder.setColor(Color.BLACK);
-        embedBuilder.setTimestamp(OffsetDateTime.now());
-
-        sendToDiscord.sendEmbed(embedBuilder);
+        if (!profile.isVanished()) {
+            sendToDiscord.sendChatEmbed(embedBuilder);
+        }
+        logMinecraft.log(embedBuilder);
 
     }
-
 }

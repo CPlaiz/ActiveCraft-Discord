@@ -1,2 +1,9 @@
 bot-token: #go to https://discord.com/developers/applications, create a new application, go to bot, create a new bot and paste the token here
-discord-chat-channelid: #<-- this is the channel you can chat in with other people
+minecraft-to-discord-format: "**%displayname%**: %message%" #How the Minecraft messages look like in Discord. Check the list of available placeholders at https://cplaiz.github.io/ActiveCraft-Discord/docs
+discord-to-minecraft-format: "§3[Discord] §f%nickname%: %message%" #How the Discord messages look like in Minecraft
+chat-channelid: #This is the minecraft chat channel
+event-log-channelid: #This is the channel that logs joins, leaves, deaths and achievements
+socialspy-channelid: #This is the channel that MSG messages are logged in
+staffchat-channelid: #This is like discord-chat-channelid, but it sends messages in staffchat and not in regular chat
+console-channelid: #This is the channel where the server console is logged in
+bot-status: "%playing% ActiveCraft-Discord by CPlaiz"

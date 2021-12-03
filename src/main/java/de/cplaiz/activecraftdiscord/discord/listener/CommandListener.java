@@ -4,7 +4,6 @@ import java.util.concurrent.TimeUnit;
 
 
 import de.cplaiz.activecraftdiscord.ActiveCraftDiscord;
-import de.silencio.activecraftcore.utils.FileConfig;
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -13,8 +12,6 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class CommandListener extends ListenerAdapter {
-
-	FileConfig config = new FileConfig("config.yml");
 
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
