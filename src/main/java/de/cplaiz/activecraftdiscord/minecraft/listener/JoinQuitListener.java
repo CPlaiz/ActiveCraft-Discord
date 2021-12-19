@@ -1,6 +1,7 @@
 package de.cplaiz.activecraftdiscord.minecraft.listener;
 
 import de.cplaiz.activecraftdiscord.discord.SendToDiscord;
+import de.silencio.activecraftcore.utils.ColorUtils;
 import de.silencio.activecraftcore.utils.MessageUtils;
 import de.silencio.activecraftcore.utils.Profile;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -24,9 +25,8 @@ public class JoinQuitListener implements Listener {
         Player p = event.getPlayer();
         Profile profile = new Profile(event.getPlayer());
 
-        SendToDiscord sendToDiscord = new SendToDiscord();
         EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setAuthor(MessageUtils.removeColorAndFormat(profile.getNickname()) + " joined the server", null, "https://crafatar.com/avatars/" + p.getUniqueId());
+        embedBuilder.setAuthor(ColorUtils.removeColorAndFormat(profile.getNickname()) + " joined the server", null, "https://crafatar.com/avatars/" + p.getUniqueId());
         embedBuilder.setColor(Color.GREEN);
         embedBuilder.setTimestamp(OffsetDateTime.now());
 
@@ -39,15 +39,14 @@ public class JoinQuitListener implements Listener {
         Player p = event.getPlayer();
         Profile profile = new Profile(event.getPlayer());
 
-        SendToDiscord sendToDiscord = new SendToDiscord();
         EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setAuthor(MessageUtils.removeColorAndFormat(profile.getNickname()) + " left the server", null, "https://crafatar.com/avatars/" + p.getUniqueId());
+        embedBuilder.setAuthor(ColorUtils.removeColorAndFormat(profile.getNickname()) + " left the server", null, "https://crafatar.com/avatars/" + p.getUniqueId());
         embedBuilder.setColor(Color.RED);
         embedBuilder.setTimestamp(OffsetDateTime.now());
         if (!profile.isVanished()) {
-            sendToDiscord.sendChatEmbed(embedBuilder);
+            SendToDiscord.sendChatEmbed(embedBuilder);
         }
-        logMinecraft.log(embedBuilder);
+        SendToDiscord.sendLog(embedBuilder);
 
     }
 }
