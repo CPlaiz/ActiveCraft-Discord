@@ -41,10 +41,7 @@ public class JoinQuitListener implements Listener {
         embedBuilder.setAuthor(ColorUtils.removeColorAndFormat(profile.getNickname()) + " left the server", null, "https://crafatar.com/avatars/" + p.getUniqueId());
         embedBuilder.setColor(Color.RED);
         embedBuilder.setTimestamp(OffsetDateTime.now());
-        if (!profile.isVanished()) {
-            SendToDiscord.sendChatEmbed(embedBuilder);
-        }
+        if (!profile.isVanished()) SendToDiscord.sendChatEmbed(embedBuilder);
         SendToDiscord.sendLog(embedBuilder);
-
     }
 }
