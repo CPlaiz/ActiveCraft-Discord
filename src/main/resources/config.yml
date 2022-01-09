@@ -1,9 +1,27 @@
-bot-token: #go to https://discord.com/developers/applications, create a new application, go to bot, create a new bot and paste the token here
-minecraft-to-discord-format: "**%displayname%**: %message%" #How the Minecraft messages look like in Discord. Check the list of available placeholders at https://cplaiz.github.io/ActiveCraft-Discord/docs
-discord-to-minecraft-format: "§3[Discord] §f%nickname%: %message%" #How the Discord messages look like in Minecraft
-chat-channelid: #This is the minecraft chat channel
-event-log-channelid: #This is the channel that logs joins, leaves, deaths and achievements
-socialspy-channelid: #This is the channel that MSG messages are logged in
-staffchat-channelid: #This is like discord-chat-channelid, but it sends messages in staffchat and not in regular chat
-console-channelid: #This is the channel where the server console is logged in
+#  Configuration file for ActiveCraft-Discord
+#  Made by CPlaiz and Silencio
+
+
+# Linking
+# Go to https://discord.com/developers/applications, create a new application, go to bot, create a new bot and paste the bot token here. This is required for the plugin to function.
+bot-token:
+
+# Chat Format
+# How the Minecraft messages look like in Discord. Check the list of available placeholders at https://cplaiz.github.io/ActiveCraft-Discord/docs. This is required for the plugin to function.
+minecraft-to-discord-format: "**%displayname%**: %message%"
+#How the Discord messages look like in Minecraft. This is required for the plugin to function.
+discord-to-minecraft-format: "§3[Discord] §f%nickname%: %message%"
+
+# Channel Linking
+# The main text channel. This is required for the plugin to function.
+chat-channelid:
+# This channel logs joins, leaves, deaths and achievements. This function is optional.
+event-log-channelid:
+# This channel logs MSG messages between players on the server. This function is optional.
+socialspy-channelid:
+# This channel is like chat-channelid, but for staffchat. This function is optional.
+staffchat-channelid:
+# This channel links the server console to a discord channel. This function is optional.
+console-channelid:
+# The bot's Status visible on Discord. This function is optional.
 bot-status: "%playing% ActiveCraft-Discord by CPlaiz"
