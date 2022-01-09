@@ -4,15 +4,17 @@ import de.cplaiz.activecraftdiscord.discord.SendToDiscord;
 import de.cplaiz.activecraftdiscord.minecraft.listener.*;
 import de.cplaiz.activecraftdiscord.discord.listener.CommandListener;
 import de.cplaiz.activecraftdiscord.utils.ConsoleAppender;
-import de.cplaiz.activecraftdiscord.utils.ConsoleQueueWorker;
+import de.cplaiz.activecraftdiscord.utils.ConsoleQueueManager;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
+import de.silencio.activecraftcore.utils.UpdateChecker;
 import lombok.Getter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
@@ -34,7 +36,7 @@ public final class ActiveCraftDiscord extends JavaPlugin {
 
     public static String PREFIX = ChatColor.GREEN + "ActiveCraft-Discord " + ChatColor.WHITE;
 
-    public JDA jda = null;
+    private static JDA jda = null;
 
     private TextChannel chatChannel;
     private TextChannel socialSpyChannel;
@@ -50,7 +52,7 @@ public final class ActiveCraftDiscord extends JavaPlugin {
     private final Deque<String> consoleMessageQueue = new LinkedList<>();
 
     ConsoleAppender consoleAppender;
-    ConsoleQueueWorker consoleQueueWorker;
+    ConsoleQueueManager consoleQueueWorker;
 
     private CommandManager cmdMan;
     private StaffChatListener staffChatListener;
@@ -81,9 +83,9 @@ public final class ActiveCraftDiscord extends JavaPlugin {
             getLogger().severe("*** This plugin will be disabled! ***");
             this.setEnabled(false);
             return;
-        } else if (!Bukkit.getPluginManager().getPlugin("ActiveCraft-Core").getDescription().getVersion().matches("[1-9]\\.[2-9]\\.[2-9]")) {
-            getLogger().severe("*** The version of ActiveCraft-Core you are using is incompatible with ActiveCraft-Discord v1.0.1! ***");
-            getLogger().severe("*** Please use ActiveCraft-Core v1.2.2 or higher! ***");
+        } else if (!Bukkit.getPluginManager().getPlugin("ActiveCraft-Core").getDescription().getVersion().matches("[1-9]\\.[2-9]\\.[3-9]")) {
+            getLogger().severe("*** The version of ActiveCraft-Core you are using is incompatible with ActiveCraft-Discord v" + getPlugin().getDescription().getVersion() + "! ***");
+            getLogger().severe("*** Please use ActiveCraft-Core v1.2.3 or higher! ***");
             getLogger().severe("*** This plugin will be disabled! ***");
             this.setEnabled(false);
             return;
@@ -93,8 +95,8 @@ public final class ActiveCraftDiscord extends JavaPlugin {
 
         String botToken = mainConfig.getString("bot-token");
         if (botToken == null || botToken.equals("")) {
-            getLogger().severe("*** Could not start ActiveCraft-Discord. Empty Token ***");
-            getLogger().severe("*** Please enter a token in 'ActiveCraft-Discord/config.yml' ***");
+            getLogger().severe("*** Unable to start ActiveCraft-Discord. Empty Token ***");
+            getLogger().severe("*** Please enter a valid token in 'ActiveCraft-Discord/config.yml' ***");
             getLogger().severe("*** This plugin will be disabled! ***");
             this.setEnabled(false);
             return;
@@ -124,12 +126,18 @@ public final class ActiveCraftDiscord extends JavaPlugin {
             jda.awaitReady();
         } catch (LoginException | InterruptedException e) {
             e.printStackTrace();
+        } catch (ErrorResponseException e) {
+            error("Can't connect to Discord. Shutting down.");
+            this.setEnabled(false);
+            return;
         }
 
         if (invalidChannels()) return;
 
         consoleAppender = new ConsoleAppender();
-        consoleQueueWorker = new ConsoleQueueWorker();
+        consoleQueueWorker = new ConsoleQueueManager();
+        consoleQueueWorker.start();
+
 
         getLogger().log(Level.INFO, "Discord Bot has started.");
 
@@ -137,6 +145,11 @@ public final class ActiveCraftDiscord extends JavaPlugin {
 
         this.register();
         log("Plugin loaded");
+
+        new UpdateChecker(this, 98103).getVersion(version -> {
+            if (!this.getDescription().getVersion().equals(version))
+                getLogger().info("There is a new update available.");
+        });
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setAuthor("Server has started", null, "https://img.icons8.com/plasticine/452/play.png");
@@ -148,8 +161,8 @@ public final class ActiveCraftDiscord extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if (consoleAppender != null) consoleAppender.shutdown();
         if (jda != null) {
-
             if (!errorShutdown) {
                 EmbedBuilder embedBuilder = new EmbedBuilder();
                 embedBuilder.setAuthor("Server has stopped", null, "https://img.icons8.com/plasticine/452/stop.png");
@@ -308,5 +321,13 @@ public final class ActiveCraftDiscord extends JavaPlugin {
         }
 
         return invalid;
+    }
+
+    public static JDA getJda() {
+        return jda;
+    }
+
+    public static void setJda(JDA jda) {
+        ActiveCraftDiscord.jda = jda;
     }
 }
